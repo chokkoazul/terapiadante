@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import './App.css';
-import { throws } from 'assert';
+import Select from 'react-select';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -51,6 +51,18 @@ export default class App extends Component {
     });
   }
 
+  handleChange3 = (event) => {
+    
+    console.log("event",event.value);
+
+    //const name = event.target.name;
+
+    /*this.setState({ 
+      [name]: event.target.value,
+      respuesta: "inicio"
+    });*/
+  }
+
   handleChange2 = date => {
     this.setState({
       startDate: date,
@@ -86,63 +98,51 @@ export default class App extends Component {
       La tarea ({this.state.tarea}) con estado ({this.state.estado}) ha sido ingresada!!!
     </div>;
     }
+
+    const options = [
+      { value: 'tarea cuaderno', label: 'tarea cuaderno'},
+      { value: 'juego dirigido mañana', label: 'juego dirigido mañana'}  
+    ]
     
     return (
-      <div className="container border border-primary p-3 mb-2 bg-info text-white">
+      <div className="contenedor" >
         
-        <form className="App" onSubmit={this.handleSubmit}>
-        
+        <form onSubmit={this.handleSubmit}>
+          <p>Terapias de Dante</p>
 
-        <div className="form-group">
-        
-        <div className="row">
-          <div className="col-sm">
+          <div className="div-dia">
           <label>Dia</label>
-          </div>
-          <div className="col-sm">
           <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange2}
-        />
+            className="picker-date"
+            selected={this.state.startDate}
+            onChange={this.handleChange2}
+          />
           </div>
-        </div>
-        
-        </div>
-
-        <div className="form-group">
-        <div className="row">
-        
-          <div className="col-sm">
-          <label>Tarea</label>
+          
+          <div className="div-tarea">
+            <label>Tarea</label>
+            <select name="tarea" value={this.state.tarea} onChange={this.handleChange}>
+              <option value="tarea cuaderno">tarea cuaderno</option>
+              <option value="juego dirigido mañana">juego dirigido mañana</option>
+              <option value="juego dirigido tarde">juego dirigido tarde</option>
+              <option value="terapia pc yasna">terapia pc yasna</option>
+              <option value="terapia pc paulina">terapia pc paulina</option>
+            </select>
+            <Select options={options} onChange={this.handleChange3}/>
           </div>
-          <div className="col-sm">
-          <select className="form-control" name="tarea" value={this.state.tarea} onChange={this.handleChange}>
-            <option value="tarea cuaderno">tarea cuaderno</option>
-            <option value="juego dirigido mañana">juego dirigido mañana</option>
-            <option value="juego dirigido tarde">juego dirigido tarde</option>
-            <option value="terapia pc yasna">terapia pc yasna</option>
-            <option value="terapia pc paulina">terapia pc paulina</option>
-          </select>
-          </div>
-          </div>
-        </div>
-        
-        
-          <div className="form-group">
-          <div className="row">
-            <div className="col-sm">
+      
+          <div className="div-estado">
             <label>Estado</label>
-            </div>
-            <div className="col-sm">
-            <select className="form-control" name="estado" value={this.state.estado} onChange={this.handleChange}>
+            <select name="estado" value={this.state.estado} onChange={this.handleChange}>
             <option value="insuficiente">Insuficiente</option>
             <option value="suficiente">Suficiente</option>
             <option value="logrado">Logrado</option>
           </select>
           </div>
-          </div>
-          </div>
-          <button type="submit" className="btn btn-primary">Enviar</button>
+          
+
+
+          <button type="submit">Enviar</button>
         </form>
         
         {mensaje}
